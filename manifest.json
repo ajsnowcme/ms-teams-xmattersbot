@@ -2,16 +2,16 @@
     "$schema": "https://statics.teams.microsoft.com/sdk/v1.0/manifest/MicrosoftTeams.schema.json",
     "manifestVersion": "1.0",
     "version": "1.0.0",
-    "id": "********-****-****-****-************",
-    "packageName": "com.xmatters.xmattersbot",
+    "id": "aa6cef2e-ccf9-4e73-be69-876ce4cfd7a4",
+    "packageName": "com.xmolin.teams.bot1",
     "developer": {
-        "name": "xmatters",
-        "websiteUrl": "https://www.microsoft.com",
-        "privacyUrl": "https://www.microsoft.com/privacy",
-        "termsOfUseUrl": "https://www.microsoft.com/termsofuse"
+        "name": "xMatters",
+        "websiteUrl": "https://xmatters.com",
+        "privacyUrl": "https://www.xmatters.com/policy/privacy-policy/",
+        "termsOfUseUrl": "https://www.xmatters.com/policy/terms-conditions/"
     },
     "name": {
-        "short": "xMatters Bot",
+        "short": "xmolinbot1",
         "full": "xMatters App for Microsoft Teams"
     },
     "description": {
@@ -19,10 +19,10 @@
         "full": "This is a beta."
     },
     "icons": {
-        "outline": "xmatters20x20.png",
-        "color": "xmatters96x96.png"
+        "color": "color.png",
+        "outline": "outline.png"
     },
-    "accentColor": "#60A18E",
+    "accentColor": "#99CC00",
     "staticTabs": [{
         "entityId": "com.xmatters.xmattersbot.hellotab",
         "name": "Hello Tab",
@@ -39,7 +39,7 @@
         ]
     }],
     "bots": [{
-        "botId": "********-****-****-****-************",
+        "botId": "a2ba6d0a-3ee2-44e9-a34f-230d1a53e857",
         "needsChannelSelector": false,
         "isNotificationOnly": false,
         "scopes": [
@@ -48,7 +48,7 @@
         ]
     }],
     "composeExtensions": [{
-        "botId": "********-****-****-****-************",
+        "botId": "a2ba6d0a-3ee2-44e9-a34f-230d1a53e857",
         "scopes": [
             "personal",
             "team"
