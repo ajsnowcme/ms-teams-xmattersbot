@@ -154,7 +154,7 @@ bot.dialog('engageButtonClick', [
             var contactType = session.dialogData.contactType;
             contactType.recipientType = contactType.recipientType.trim();
 
-                postEngage(contactType.target, session);
+                postEngage(contactType.target, contactType);
                 //engage(contactType.target,session,direct);
         }
     ]).triggerAction({ matches: /(Engage)\s(.*).*/i });
