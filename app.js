@@ -181,7 +181,7 @@ bot.dialog('oncallButtonClick', [
             var contactType = session.dialogData.contactType = {
                 utterance: utterance,
                 endpoint: "oncall",
-                target: utterance.split(" ")[1] ? utterance.split(" ")[1] : null,
+                target: utterance.split(" ")[1] ? utterance.substring(7) : null,
                 recipientType: recipientType ? recipientType[0].toLowerCase()+" " : "",
             };
 
@@ -193,7 +193,7 @@ bot.dialog('oncallButtonClick', [
             var contactType = session.dialogData.contactType;
             contactType.recipientType = contactType.recipientType.trim();
 
-                postOncall(contactType.target, session);
+                postOncall(contactType.target, contactType);
                 //engage(contactType.target,session,direct);
         }
     ]).triggerAction({ matches: /(Oncall)\s(.*).*/i });
