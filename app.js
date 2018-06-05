@@ -154,19 +154,57 @@ bot.dialog('engageButtonClick', [
             var contactType = session.dialogData.contactType;
             contactType.recipientType = contactType.recipientType.trim();
 
-                postData(contactType.target, session);
+                postEngage(contactType.target, session);
                 //engage(contactType.target,session,direct);
         }
     ]).triggerAction({ matches: /(Engage)\s(.*).*/i });
 
 
-function postData(contact, session){
+function postEngage(contact, session){
     request.post(
 //       'https://advisors.na5.xmatters.com/api/integration/1/functions/0fbe9db0-5e22-4661-af53-c81b88528583/triggers?apiKey=9d4c74a4-a844-4dbd-a3ee-3d15ffb9a499',
        'https://olin.cs1.xmatters.com/api/integration/1/functions/a49b2eb3-1219-4a9b-bf81-b0cd5bae6e18/triggers?apiKey=d2165aba-66fb-4ba7-8c67-be59460d04b5',
        { json: { recipients: contact, session: session } },
        function (error, response, body) {
-           if (!error && response.statusCode == 200) {
+           if (!error && response.statusCode <= 299) {
+               console.log(body)
+           }
+       }
+   );  
+}
+
+bot.dialog('oncallButtonClick', [
+        function (session, args, next) {
+
+            var utterance = args.intent.matched[0];
+            var recipientType = /\b(Directly)\b/i.exec(utterance);
+            var contactType = session.dialogData.contactType = {
+                utterance: utterance,
+                endpoint: "oncall",
+                target: utterance.split(" ")[1] ? utterance.split(" ")[1] : null,
+                recipientType: recipientType ? recipientType[0].toLowerCase()+" " : "",
+            };
+
+            //TODO: ensure group exists
+
+            next();
+        },
+        function (session, results) {
+            var contactType = session.dialogData.contactType;
+            contactType.recipientType = contactType.recipientType.trim();
+
+                postOncall(contactType.target, session);
+                //engage(contactType.target,session,direct);
+        }
+    ]).triggerAction({ matches: /(Oncall)\s(.*).*/i });
+
+
+function postOncall(contact, session){
+    request.post(
+       'https://olin.cs1.xmatters.com/api/integration/1/functions/619442b5-badf-4636-a9f8-b227a1be370e/triggers?apiKey=a1a1e69a-2184-4501-bd60-63d817bd1d62',
+       { json: { recipients: contact, session: session } },
+       function (error, response, body) {
+           if (!error && response.statusCode <= 299) {
                console.log(body)
            }
        }
