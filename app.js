@@ -217,7 +217,7 @@ function help(targets,session){
         helpText += "**help:** Displays this help\n\n";
         helpText += "**oncall [group]:** Displays who's on call\n\n";
         helpText += "**engage [group]:** Invite people to the chat\n\n";
-        helpText += "**confCall:** Creates a conference bridge\n\n";
+        // helpText += "**confCall:** Creates a conference bridge\n\n";
 
         postToChannel(session,helpText,"markdown");
     }
