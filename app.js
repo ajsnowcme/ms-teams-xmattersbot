@@ -1,7 +1,7 @@
 
 
 /*-----------------------------------------------------------------------------
-A simple echo bot for the Microsoft Bot Framework. 
+A simple echo bot for the Microsoft Bot Framework.
 -----------------------------------------------------------------------------*/
 
 var restify = require('restify');
@@ -13,21 +13,21 @@ var request = require('request');
 // Setup Restify Server
 var server = restify.createServer();
 server.listen(process.env.port || process.env.PORT || 3978, function () {
-   console.log('%s listening to %s', server.name, server.url); 
+   console.log('%s listening to %s', server.name, server.url);
 });
-  
+
 // Create chat connector for communicating with the Bot Framework Service
 var connector = new builder.ChatConnector({
     appId: process.env.MicrosoftAppId,
     appPassword: process.env.MicrosoftAppPassword,
-    openIdMetadata: process.env.BotOpenIdMetadata 
+    openIdMetadata: process.env.BotOpenIdMetadata
 });
 
-// Listen for messages from users 
+// Listen for messages from users
 server.post('/api/messages', connector.listen());
 
 /*----------------------------------------------------------------------------------------
-* Bot Storage: This is a great spot to register the private state storage for your bot. 
+* Bot Storage: This is a great spot to register the private state storage for your bot.
 * We provide adapters for Azure Table, CosmosDb, SQL Azure, or you can implement your own!
 * For samples and documentation, see: https://github.com/Microsoft/BotBuilder-Azure
 * ---------------------------------------------------------------------------------------- */
@@ -48,8 +48,8 @@ bot.dialog('/', [
         builder.Prompts.text(session, "Not a triggered word.  Try Help.");
         session.endDialog();
     },
-    
-        
+
+
 ]);
 
 bot.dialog('Hello', [
@@ -58,7 +58,7 @@ bot.dialog('Hello', [
     },
     function (session, results) {
         session.userData.name = results.response;
-        builder.Prompts.number(session, "Hi " + results.response + ", How many years have you been coding?"); 
+        builder.Prompts.number(session, "Hi " + results.response + ", How many years have you been coding?");
     },
     function (session, results) {
         session.userData.coding = results.response;
@@ -66,8 +66,8 @@ bot.dialog('Hello', [
     },
     function (session, results) {
         session.userData.language = results.response.entity;
-        session.send("Got it... " + session.userData.name + 
-                    " you've been programming for " + session.userData.coding + 
+        session.send("Got it... " + session.userData.name +
+                    " you've been programming for " + session.userData.coding +
                     " years and use " + session.userData.language + ".");
         session.endDialog();
     }
@@ -81,7 +81,7 @@ bot.dialog('help', [
        //builder.Prompts.text(session, "Hello... What's your name?");
        help(extras,session);
     }
-    
+
 ]).triggerAction({ matches: /(Help)\s(.*).*/i });
 
 
@@ -118,7 +118,7 @@ bot.dialog('engageButtonClick', [
                         ])
                 ]);
                 session.send(msg).endDialog();
-            } 
+            }
         },
         function (session, args, next) {
             var contactType = session.dialogData.contactType;
@@ -145,7 +145,7 @@ bot.dialog('engageButtonClick', [
                             ])
                     ]);
                     session.send(msg).endDialog();
-                } 
+                }
             }else{
                 next();
             }
@@ -162,15 +162,14 @@ bot.dialog('engageButtonClick', [
 
 function postEngage(contact, session){
     request.post(
-//       'https://advisors.na5.xmatters.com/api/integration/1/functions/0fbe9db0-5e22-4661-af53-c81b88528583/triggers?apiKey=9d4c74a4-a844-4dbd-a3ee-3d15ffb9a499',
-       'https://olin.cs1.xmatters.com/api/integration/1/functions/a49b2eb3-1219-4a9b-bf81-b0cd5bae6e18/triggers?apiKey=d2165aba-66fb-4ba7-8c67-be59460d04b5',
+       'https://cmegroup-np.hosted.xmatters.com/api/integration/1/functions/fa0adf4a-8087-4e51-bc93-1e73717dc784/triggers?apiKey=ffd9e9e7-cba2-41ba-88fc-dbd6e757258f',
        { json: { recipients: contact, session: { dialogData: session.dialogData, channel_name: session.message.address.channelId, user_name: session.message.user.name } } },
        function (error, response, body) {
            if (!error && response.statusCode <= 299) {
                console.log(body)
            }
        }
-   );  
+   );
 }
 
 bot.dialog('oncallButtonClick', [
@@ -201,14 +200,14 @@ bot.dialog('oncallButtonClick', [
 
 function postOncall(contact, session){
     request.post(
-       'https://olin.cs1.xmatters.com/api/integration/1/functions/619442b5-badf-4636-a9f8-b227a1be370e/triggers?apiKey=a1a1e69a-2184-4501-bd60-63d817bd1d62',
+       'https://cmegroup-np.hosted.xmatters.com/api/integration/1/functions/720e214f-dd12-4a70-acbb-369243ed4fc6/triggers?apiKey=0f76de9e-69e6-4b28-9d73-1dca26ebd140',
        { json: { recipients: contact, session: session } },
        function (error, response, body) {
            if (!error && response.statusCode <= 299) {
                console.log(body)
            }
        }
-   );  
+   );
 }
 
 function help(targets,session){
@@ -233,14 +232,3 @@ function postToChannel(session, text,type){
         console.log(msg);
         bot.send(msg);
     }
-
-
-
-
-
-
-
-
-
-        
-       
